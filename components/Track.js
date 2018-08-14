@@ -29,7 +29,6 @@ class Track extends React.Component<Props> {
           p.track-description {
             margin-top: 0;
             padding-bottom: 20px;
-            border-bottom: 2px solid #ccc;
           }
           table {
             border-spacing: 3px;

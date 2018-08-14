@@ -1,6 +1,6 @@
 // @flow
 
-import { pointsToLevels, milestoneToPoints, trackIds, totalPointsFromMilestoneMap } from '../constants'
+import { pointsToLevels, milestoneToPoints, trackIds, totalPointsFromMilestoneMap, maxLevel } from '../constants'
 import type { MilestoneMap } from '../constants'
 import React from 'react'
 
@@ -11,18 +11,21 @@ type Props = {
 class PointSummaries extends React.Component<Props> {
   render() {
     const totalPoints = totalPointsFromMilestoneMap(this.props.milestoneByTrack)
-
+    
     let currentLevel, nextLevel
 
     let pointsForCurrentLevel = totalPoints
-    while (!(currentLevel = pointsToLevels[pointsForCurrentLevel])) {
-      pointsForCurrentLevel--
+    if (pointsForCurrentLevel > 0) {
+      while (!(currentLevel = pointsToLevels[pointsForCurrentLevel])) {
+        pointsForCurrentLevel--      
+      }
     }
 
     let pointsToNextLevel = 1
+
     while (!(nextLevel = pointsToLevels[totalPoints + pointsToNextLevel])) {
       pointsToNextLevel++
-      if (pointsToNextLevel > 135) {
+      if (pointsToNextLevel > maxLevel) {
         pointsToNextLevel = 'N/A'
         break
       }
